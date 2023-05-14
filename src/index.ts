@@ -11,6 +11,7 @@ import { logger } from './utils/logger';
 // routes:
 import healthCheckRoute from './routes/index'
 import itemRouter from './routes/item.router';
+import authRoutes from './routes/auth.router'
 
 const PORT = process.env.PORT || 4545
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 
 app.use('/healthcheck', healthCheckRoute);
 app.use('/item', itemRouter);
+app.use('/auth', authRoutes);
 
 const server = http.createServer(app);
 
