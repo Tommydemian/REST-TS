@@ -1,10 +1,15 @@
 import { Router } from 'express';
-import { addItem } from '../controllers/item.controller'
+import { addItem, getItems, getItem, updateItem, removeItem } from '../controllers/item.controller'
 
 const router =  Router();
 
 router.route('/')
-.get()
+.get(getItems)
 .post(addItem)
+
+router.route('/:id')
+.get(getItem)
+.patch(updateItem)
+.delete(removeItem)
 
 export default router;
