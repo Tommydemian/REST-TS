@@ -1,5 +1,6 @@
 # Controllers:
   controllers should not knwo about business logic
+  el controlador recive y contesta => No se encarga de la logica de negocio. 
 
  ``` TODO: better error handling 
 ```

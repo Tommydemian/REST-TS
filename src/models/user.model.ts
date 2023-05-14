@@ -1,29 +1,32 @@
-import mongoose from "mongoose";
+import { Schema, Types, Model, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
-export interface IUser extends mongoose.Document{
-    email: string;
-    name: string;
-    password: string;
-}
+import { User } from "../types/user.interface";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema<User>(
+  {
     email: {
-        type: String,
-        required: true, 
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     name: {
-        type: String,
-        required: true, 
+      type: String,
+      required: true,
     },
-      password: {
-        type: String,
-         required: true,
-          select: false
+    password: {
+      type: String,
+      required: true,
     },
-}, { timestamps: true });
+    description: {
+      type: String,
+      required: true,
+      default: "Hello, im the description"
+    },
+  },
+  { timestamps: true }
+);
 
-const userModel = mongoose.model<IUser>('User', userSchema);
+const userModel = model("User", userSchema);
 
 export default userModel;
