@@ -2,6 +2,7 @@ import { User } from "../types/user.interface";
 import { Auth } from '../types/auth.interface'
 import UserModel from "../models/user.model";
 import { encrypt, verify } from "../utils/handlebcrypt";
+import { generateToken, verifyToken } from '../utils/handlejwt'
 
 const registerNewUser = async (user: User) => {
   const exists = await UserModel.findOne({ email: user.email });
@@ -21,16 +22,26 @@ const registerNewUser = async (user: User) => {
 };
 
 const loginUser = async (credentials: Auth) => {
-    const userExists = await UserModel.findOne({ email: credentials.email });
+    const existentUser = await UserModel.findOne({ email: credentials.email });
     // checks if the user already exists in the database
-    if (!userExists) return "user not found!";
+    if (!existentUser) return "user not found!";
     // Login user  
     // 1. Compare the stored hash value with the input password
-    const verifyPass = await verify(credentials.password, userExists.password);
+    const verifyPass = await verify(
+        credentials.password,
+        existentUser.password);
     // if false
     if (!verifyPass) return "passwords don't match!";
     // else return user
-    return userExists      
+
+    const token = generateToken(existentUser._id.toString())
+
+    const data = {
+        token, 
+        existentUser, 
+    }
+
+    return data;      
 };
 
 export { registerNewUser, loginUser };
