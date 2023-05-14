@@ -10,21 +10,20 @@ import { connectDb } from './utils/connectDb';
 import { logger } from './utils/logger';
 // routes:
 import healthCheckRoute from './routes/index'
+import itemRouter from './routes/item.router';
 
 const PORT = process.env.PORT || 4545
 
 const app = express();
 
-app.use(cors({
-    credentials: true
-}));
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use(cookieParser());
 
 app.use('/healthcheck', healthCheckRoute);
+app.use('/item', itemRouter);
 
 const server = http.createServer(app);
 
