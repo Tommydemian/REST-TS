@@ -3,6 +3,7 @@ import { Auth } from '../types/auth.interface'
 import UserModel from "../models/user.model";
 import { encrypt, verify } from "../utils/handlebcrypt";
 import { generateToken, verifyToken } from '../utils/handlejwt'
+import { createCustomError } from '../error/CustomApiError'
 
 const registerNewUser = async (user: User) => {
   const exists = await UserModel.findOne({ email: user.email });

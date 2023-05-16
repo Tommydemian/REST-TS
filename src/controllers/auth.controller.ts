@@ -1,22 +1,26 @@
 import { Request, Response, NextFunction } from 'express'
 import { registerNewUser, loginUser } from '../services/auth.service'
+import { createCustomError } from '../error/CustomApiError'
 
-const registerCtrl = async (req:Request, res:Response) => {
+const registerCtrl = async (req:Request, res:Response, next:NextFunction) => {
   try {
     const newUser = await registerNewUser(req.body)
+    if (!newUser) return next(createCustomError(500, 'Failed to register new user'))
     return res.send(newUser)
   } catch (error:any) {
-    console.error(error.message);
+    next(error)
   }
 }
 
-const loginCtrl = async (req:Request, res:Response) => {
+const loginCtrl = async (req:Request, res:Response, next:NextFunction) => {
     try {
         const {email, password} = req.body
-        const logUser = await loginUser({ email, password })   
+        if (!email || !password) return next(createCustomError(400, 'Please provide email and password'));
+        const logUser = await loginUser({ email, password })
+        if (!logUser) return next(createCustomError(401, 'Invalid email or password'))   
         return res.send(logUser) 
     } catch (error) {
-        console.error(error.message);
+        next(error)
     }
 }
 

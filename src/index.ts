@@ -13,6 +13,8 @@ import healthCheckRoute from './routes/index'
 import itemRouter from './routes/item.router';
 import authRoutes from './routes/auth.router';
 import orderRoutes from './routes/order.route';
+// middleware:
+import { apiErrorHandler } from './middleware/api-error-handler'
 
 const PORT = process.env.PORT || 4545
 
@@ -25,9 +27,11 @@ app.use(compression());
 app.use(cookieParser());
 
 app.use('/healthcheck', healthCheckRoute);
-app.use('/item', itemRouter);
+app.use('/items', itemRouter);
 app.use('/auth', authRoutes);
 app.use('/order', orderRoutes);
+
+app.use(apiErrorHandler)
 
 const server = http.createServer(app);
 
