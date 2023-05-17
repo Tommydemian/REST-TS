@@ -7,6 +7,6 @@ export class CustomApiError extends Error {
     }
 };
 
-export const createCustomError = (statusCode, message) => {
+export const createCustomError = (statusCode:number, message:string):CustomApiError => {
     return new CustomApiError(statusCode, message)
-}
+};

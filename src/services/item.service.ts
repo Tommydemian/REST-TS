@@ -1,6 +1,6 @@
 import Item from "../models/item.model";
 import { Car } from "../types/car.interface";
-import { createCustomError } from "../error/CustomApiError";
+import { createCustomError, CustomApiError } from "../error/CustomApiError";
 import { logger } from "../utils/logger";
 
 // insert a new car into the database
@@ -64,4 +64,4 @@ const deleteCar = async (id: string) => {
   }
 };
 
-export { insertCar, getAllCars, getCar, updateCar, deleteCar};
+export { insertCar, getAllCars, getCar, updateCar, deleteCar };

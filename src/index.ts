@@ -7,7 +7,6 @@ import { AddressInfo } from 'net';
 import { connectDb } from './utils/connectDb';
 import { logger } from './utils/logger';
 // routes:
-import healthCheckRoute from './routes/index'
 import itemRouter from './routes/item.router';
 import authRoutes from './routes/auth.router';
 import orderRoutes from './routes/order.route';
@@ -22,12 +21,12 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/healthcheck', healthCheckRoute);
+app.use(apiErrorHandler)
+
 app.use('/items', itemRouter);
 app.use('/auth', authRoutes);
 app.use('/order', orderRoutes);
 
-app.use(apiErrorHandler)
 
 const server = http.createServer(app);
 
